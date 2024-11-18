@@ -11,7 +11,8 @@ func main() {
 	case "pull":
 		// pullImage("https://registry-1.docker.io/v2/", args[2], args[3])
 		_, repo, tag := unmarshallImageName(args[2])
-		pullManifest("https://registry-1.docker.io/v2/", repo, tag)
+
+		parseManifest(pullManifest("https://registry-1.docker.io/v2/", repo, tag))
 	}
 }
 

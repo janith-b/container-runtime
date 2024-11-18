@@ -42,7 +42,7 @@ func pull(url string, token string) ([]byte, int) {
 	return []byte(buff.String()), resp.StatusCode
 }
 
-func pullManifest(registryEndpoint string, repo string, tag string) {
+func pullManifest(registryEndpoint string, repo string, tag string) []byte {
 	endpoint := registryEndpoint + repo + "/manifests/" + tag
 	response, err := http.Get(endpoint)
 	if err != nil {
@@ -53,7 +53,9 @@ func pullManifest(registryEndpoint string, repo string, tag string) {
 		authEndpoint := strings.Split(www_authenticate_header[0], "=")[1] + "?" + www_authenticate_header[1] + "&" + www_authenticate_header[2]
 		token := getauthToken(authEndpoint)
 		bs, _ := pull(endpoint, token)
-		fmt.Println(string(bs))
+		return bs
+	} else {
+		return make([]byte, 0)
 	}
 }
 
